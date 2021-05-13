@@ -13,7 +13,7 @@ pipeline {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
         GITREPO_CREDENTIAL_ID = 'gitee-liug-pass'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
-        REGISTRY = 'http://node1:9990'
+        REGISTRY = 'node1:9990'
         DOCKERHUB_NAMESPACE = 'docker'
         GITREPO_ACCOUNT = 'wolfcodeliug'
         APP_NAME = 'devops-demo'
