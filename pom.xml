@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.kubesphere.devops</groupId>
-    <artifactId>devops-sample</artifactId>
+    <groupId>cn.wolfcode.devops</groupId>
+    <artifactId>devops-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>devops-sample :: HelloWorld Demo</name>
+    <name>devops-demo :: HelloWorld Demo</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,6 +15,7 @@
         <!-- The destination file for the code coverage report has to be set to the same value
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
         <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
     </properties>

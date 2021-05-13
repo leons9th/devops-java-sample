@@ -11,12 +11,12 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
-        GITHUB_CREDENTIAL_ID = 'github-id'
+        GITREPO_CREDENTIAL_ID = 'gitee-liug-pass'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
-        REGISTRY = 'docker.io'
-        DOCKERHUB_NAMESPACE = 'docker_username'
-        GITHUB_ACCOUNT = 'kubesphere'
-        APP_NAME = 'devops-java-sample'
+        REGISTRY = 'http://node1:9990'
+        DOCKERHUB_NAMESPACE = 'docker'
+        GITREPO_ACCOUNT = 'wolfcodeliug'
+        APP_NAME = 'devops-demo'
     }
 
     stages {
@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
- 
+
         stage ('build & push') {
             steps {
                 container ('maven') {
@@ -77,11 +77,11 @@ pipeline {
           steps {
               container ('maven') {
                 input(id: 'release-image-with-tag', message: 'release image with tag?')
-                  withCredentials([usernamePassword(credentialsId: "$GITHUB_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh 'git config --global user.email "kubesphere@yunify.com" '
-                    sh 'git config --global user.name "kubesphere" '
+                  withCredentials([usernamePassword(credentialsId: "$GITREPO_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh 'git config --global user.email "liugang@wolfcode.cn" '
+                    sh 'git config --global user.name "wolfcodeliug" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
-                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/devops-java-sample.git --tags --ipv4'
+                    sh 'git push http://$GIT_USERNAMEΩ:$GIT_PASSWORD@gitee.com/$GITREPO_ACCOUNT/devops-demo.git --tags --ipv4'
                   }
                 sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
                 sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '

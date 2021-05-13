@@ -1,5 +1,6 @@
-package io.kubesphere.devops;
+package cn.wolfcode.devops;
 
+import cn.wolfcode.devops.HelloWorldController;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,6 +9,6 @@ public class HelloWorldControllerTest {
 
     @Test
     public void testSayHello() {
-        assertEquals("Really appreciate your star, that's the power of our life.", new HelloWorldController().sayHello());
+        assertEquals("Hello DevOps...", new HelloWorldController().sayHello());
     }
 }
