@@ -11,7 +11,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
-        GITREPO_CREDENTIAL_ID = 'gitee-liug-pass'
+        GITREPO_CREDENTIAL_ID = 'gitee-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REGISTRY = 'node1:9990'
         DOCKERHUB_NAMESPACE = 'docker'
