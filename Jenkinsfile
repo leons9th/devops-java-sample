@@ -11,11 +11,12 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
-        GITREPO_CREDENTIAL_ID = 'gitee-id'
+        GIT_CREDENTIALS_ID = 'gitee-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REGISTRY = 'node1:9990'
         DOCKERHUB_NAMESPACE = 'docker'
         GITREPO_ACCOUNT = 'wolfcodeliug'
+        GITREPO_EMAIL = 'liugang@wolfcode.cn'
         APP_NAME = 'devops-demo'
     }
 
@@ -77,15 +78,15 @@ pipeline {
           steps {
               container ('maven') {
                 input(id: 'release-image-with-tag', message: 'release image with tag?')
-                  withCredentials([usernamePassword(credentialsId: "$GITREPO_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh 'git config --global user.email "liugang@wolfcode.cn" '
-                    sh 'git config --global user.name "wolfcodeliug" '
+                  sshagent(["${GIT_CREDENTIALS_ID}"]) {
+                    sh 'git config --global user.email "$GITREPO_EMAIL" '
+                    sh 'git config --global user.name "$GITREPO_ACCOUNT" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
-                    sh 'git push http://$GIT_USERNAMEΩ:$GIT_PASSWORD@gitee.com/$GITREPO_ACCOUNT/devops-demo.git --tags --ipv4'
+                    sh 'git push git@gitee.com:$GITREPO_ACCOUNT/$APP_NAME.git --tags'
                   }
                 sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
                 sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
-          }
+              }
           }
         }
         stage('deploy to production') {
